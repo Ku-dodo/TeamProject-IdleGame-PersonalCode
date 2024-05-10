@@ -15,24 +15,27 @@ public class NotificateManager
 
     public bool CheckReinforceNotiState(List<UserItemData> userItemDatas)
     {
-        //return userItemDatas.Where(item => item.hasCount >= 15 || item.hasCount >= item.level + 1).ToList().Count > 0 ? true : false;
-        var notiList = userItemDatas.Where(data => data.hasCount >= Mathf.Min(data.level + 1, 15)).ToList();
+        var notiList = userItemDatas.Where(data => data.hasCount >= Mathf.Min(data.level + 1, 15)).ToList(); //강화 가능한 아이템이 있는지 필터
         if (notiList.Count == 0)
         {
             return false;
         }
         else if (notiList.Count == 1
-            & notiList[0].itemID == Manager.Data.WeaponInvenList.Last().itemID & notiList[0].level >= 100)
+            && notiList[0].itemID == Manager.Data.WeaponInvenList.Last().itemID 
+            && notiList[0].level >= 100) // 무기 아이템이 1개인 상태에서 && 해당 아이템이 마지막 무기이며 && 해당 아이템 레벨이 100 이상인 경우
         {
             return false;
         }
         else if (notiList.Count == 1
-            & notiList[0].itemID == Manager.Data.ArmorInvenList.Last().itemID & notiList[0].level >= 100)
+            && notiList[0].itemID == Manager.Data.ArmorInvenList.Last().itemID
+            && notiList[0].level >= 100) // 방어구 아이템이 1개인 상태에서 && 해당 아이템이 마지막 방어구이며 && 해당 아이템 레벨이 100 이상인 경우
         {
             return false;
         }
         else if (notiList.Count == 2
-    & (notiList[0].itemID == Manager.Data.WeaponInvenList.Last().itemID & notiList[0].level >= 100 | notiList[0].itemID == Manager.Data.ArmorInvenList.Last().itemID & notiList[0].level >= 100))
+            && (notiList[0].itemID == Manager.Data.WeaponInvenList.Last().itemID
+            && notiList[0].level >= 100 | notiList[0].itemID == Manager.Data.ArmorInvenList.Last().itemID
+            && notiList[0].level >= 100)) // 무기, 방어구 아이템 합쳐서 2개인 상태에서 && 해당 아이템이 마지막 아이템이며 && 해당 아이템 레벨이 100 이상인 경우
         {
             return false;
         }
